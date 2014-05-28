@@ -39,6 +39,30 @@ func (t *Territory) Add(id int) {
 	}
 }
 
+func (t *Territory) Remove(id int) bool {
+	if t == nil {
+		return false
+	}
+
+	cur := t.head
+	var prev *Node = nil
+	for cur.next != nil {
+		if cur.region_id == id {
+			if prev != nil {
+				prev.next = cur.next // delete cur
+			} else { // if cur is the head, need to modify t.head
+				t.head = cur.next
+			}
+			return true
+		} else {
+			prev = cur
+		}
+		cur = cur.next
+	}
+
+	return false
+}
+
 func (t *Territory) HasRegion(id int) bool {
 	p := t.head
 	for p != nil {

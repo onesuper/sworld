@@ -34,6 +34,10 @@ func (r *Race) Show() {
 	fmt.Println()
 }
 
+func (r *Race) GetName() string {
+	return r.name
+}
+
 func (r *Race) AddTerritory(region_id int) {
 	r.territory.Add(region_id)
 
@@ -41,6 +45,10 @@ func (r *Race) AddTerritory(region_id int) {
 
 func (r *Race) HasTerritory(region_id int) bool {
 	return r.territory.HasRegion(region_id)
+}
+
+func (r *Race) SurrenderTerritory(region_id int) bool {
+	return r.territory.Remove(region_id)
 }
 
 func (r *Race) GetDeployable() int {

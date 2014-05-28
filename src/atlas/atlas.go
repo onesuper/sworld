@@ -2,6 +2,7 @@ package atlas
 
 import (
 	"fmt"
+	"race"
 	"region"
 )
 
@@ -17,7 +18,7 @@ func CreateAtlas(num int) *Atlas {
 
 func (a *Atlas) Show() {
 	fmt.Println("- * - * - * - * - * - * - * - * - * - * - * - * - * -")
-	fmt.Println("ID\tType\tDef\tAdjacent\tBelonging")
+	fmt.Println("ID\tType\tDef\tAdjacent\tBelong\tLord")
 	for i := 0; i < len(a.regions); i++ {
 		fmt.Printf("%d", i)
 		a.regions[i].Show()
@@ -51,6 +52,14 @@ func (a *Atlas) SetRegionDefense(region_id int, d int) {
 
 func (a *Atlas) SetRegionBelonging(region_id int, player_id int) {
 	a.regions[region_id].SetBelonging(player_id)
+}
+
+func (a *Atlas) SetRegionLord(region_id int, race *race.Race) {
+	a.regions[region_id].SetLord(race)
+}
+
+func (a *Atlas) GetRegionLord(region_id int) *race.Race {
+	return a.regions[region_id].GetLord()
 }
 
 func CreateTinyAtlas() *Atlas {

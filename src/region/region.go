@@ -2,6 +2,7 @@ package region
 
 import (
 	"fmt"
+	"race"
 )
 
 type Region struct {
@@ -10,6 +11,7 @@ type Region struct {
 	adjacent  *Neighbors
 	defense   int
 	belonging int
+	lord      *race.Race
 }
 
 func CreateRegion(ter int) *Region {
@@ -22,6 +24,7 @@ func CreateRegion(ter int) *Region {
 		r.defense = 0
 	}
 	r.belonging = -1
+	r.lord = nil
 	return r
 }
 
@@ -33,6 +36,11 @@ func (r *Region) Show() {
 	fmt.Printf("\t%d\t", r.defense)
 	r.adjacent.Show()
 	fmt.Printf("\t%d", r.belonging)
+	if r.lord != nil {
+		fmt.Printf("\t%s", r.lord.GetName())
+	} else {
+		fmt.Printf("\tnil")
+	}
 }
 
 func (r *Region) GetDefense() int {
@@ -45,6 +53,14 @@ func (r *Region) SetDefense(d int) {
 
 func (r *Region) SetBelonging(player_id int) {
 	r.belonging = player_id
+}
+
+func (r *Region) SetLord(race *race.Race) {
+	r.lord = race
+}
+
+func (r *Region) GetLord() *race.Race {
+	return r.lord
 }
 
 func (r *Region) AdjacentTo(id int) {
