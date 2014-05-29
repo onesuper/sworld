@@ -1,29 +1,29 @@
 package region
 
 const (
-	Farm  = 0
-	Sea   = 1
-	Plain = 2
-	Hill  = 3
-	Wood  = 4
-	Swamp = 5
+	Farm     = 0
+	Sea      = 1
+	Plain    = 2
+	Mountain = 3
+	Forest   = 4
+	Swamp    = 5
 )
 
-func NumToType(num int) string {
+func NumToStr(num int) string {
 	var t string
 	switch num {
 	case 0:
-		t = "Farm"
+		t = "##"
 	case 1:
-		t = "Sea"
+		t = "~~"
 	case 2:
-		t = "Plain"
+		t = "=="
 	case 3:
-		t = "Hill"
+		t = "AA"
 	case 4:
-		t = "Wood"
+		t = "YY"
 	case 5:
-		t = "Swamp"
+		t = "**"
 	}
 	return t
 }

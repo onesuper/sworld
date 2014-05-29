@@ -6,7 +6,6 @@ import (
 
 type Territory struct {
 	head *Node
-	tail *Node
 }
 
 type Node struct {
@@ -17,7 +16,6 @@ type Node struct {
 func CreateTerritory() *Territory {
 	t := new(Territory)
 	t.head = nil
-	t.tail = nil
 	return t
 }
 
@@ -31,11 +29,10 @@ func (t *Territory) Add(id int) {
 	new_node.next = nil
 
 	if t.head != nil {
-		t.tail.next = new_node
-		t.tail = new_node
+		t.head.next = new_node
+		t.head = new_node
 	} else {
 		t.head = new_node
-		t.tail = new_node
 	}
 }
 

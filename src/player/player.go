@@ -7,7 +7,7 @@ import (
 type Player struct {
 	id    int
 	name  string
-	money int
+	coins int
 	race  *race.Race
 }
 
@@ -15,7 +15,7 @@ func CreatePlayer(id int, name string) *Player {
 	p := new(Player)
 	p.id = id
 	p.name = name
-	p.money = 0
+	p.coins = 0
 	return p
 }
 
@@ -35,6 +35,6 @@ func (p *Player) GetId() int {
 	return p.id
 }
 
-func (p *Player) GetMoney() int {
-	return p.money
+func (p *Player) GetCoins() int {
+	return p.coins
 }

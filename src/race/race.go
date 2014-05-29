@@ -1,41 +1,33 @@
 package race
 
 import (
-	"fmt"
 	"territory"
 )
 
 type Race struct {
 	name       string
+	symbol     string
 	deployable int
 	territory  *territory.Territory
+	player_id  int
 }
 
-func CreateHuman() *Race {
+func CreateRace() *Race {
 	r := new(Race)
-	r.name = "HUMAN"
-	r.deployable = 10
 	r.territory = territory.CreateTerritory()
 	return r
-}
-
-func CreateOrc() *Race {
-	r := new(Race)
-	r.name = "ORC"
-	r.deployable = 10
-	r.territory = territory.CreateTerritory()
-	return r
-}
-
-func (r *Race) Show() {
-	fmt.Printf("%s", r.name)
-	fmt.Printf("\t%d\t", r.deployable)
-	r.territory.Show()
-	fmt.Println()
 }
 
 func (r *Race) GetName() string {
 	return r.name
+}
+
+func (r *Race) GetSymbol() string {
+	return r.symbol
+}
+
+func (r *Race) GetPlayerId() int {
+	return r.player_id
 }
 
 func (r *Race) AddTerritory(region_id int) {

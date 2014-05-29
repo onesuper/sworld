@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	atlas := atlas.CreateTinyAtlas()
+	tiny_atlas := atlas.CreateTinyAtlas()
 
 	var players [2]*player.Player
 	players[0] = player.CreatePlayer(0, "PLAYER 1")
@@ -38,16 +38,16 @@ func main() {
 
 				switch race_code {
 				case "m":
-					atlas.Show()
+					tiny_atlas.Show()
 				default:
 					race_id, err := strconv.Atoi(race_code)
 
 					if err == nil {
 						switch race_id {
 						case 1:
-							player.SetRace(race.CreateHuman())
+							player.SetRace(race.CreateHumans(player.GetId()))
 						case 2:
-							player.SetRace(race.CreateOrc())
+							player.SetRace(race.CreateOrcs(player.GetId()))
 						default:
 							fmt.Println("Wrong race code!")
 						}
@@ -63,7 +63,7 @@ func main() {
 		ConquerStage:
 			for {
 
-				player.GetRace().Show()
+				fmt.Printf("%s %d\n", player.GetRace().GetName(), player.GetRace().GetDeployable())
 
 				fmt.Println("Please choose a region to conquer. Insert the region ID")
 				fmt.Println("Or insert 'r' to redeploy troops")
@@ -76,13 +76,13 @@ func main() {
 				case "r":
 					break ConquerStage // move to redeployment stage
 				case "m":
-					atlas.Show()
+					tiny_atlas.Show()
 
 				default:
 					region_id, err := strconv.Atoi(region_code)
 
 					if err == nil {
-						err = action.Conquer(player, player.GetRace(), atlas, region_id)
+						err = action.ConquerRegion(player.GetRace(), tiny_atlas, region_id)
 						if err != nil {
 							fmt.Println(err)
 						} else {

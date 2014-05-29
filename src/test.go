@@ -1,3 +1,0 @@
-package sworld
-
-import "fmt"
