@@ -1,14 +1,10 @@
-package player
-
-import (
-	"race"
-)
+package sworld
 
 type Player struct {
 	id    int
 	name  string
 	coins int
-	race  *race.Race
+	race  *Race
 }
 
 func CreatePlayer(id int, name string) *Player {
@@ -19,11 +15,11 @@ func CreatePlayer(id int, name string) *Player {
 	return p
 }
 
-func (p *Player) GetRace() *race.Race {
+func (p *Player) GetRace() *Race {
 	return p.race
 }
 
-func (p *Player) SetRace(r *race.Race) {
+func (p *Player) SetRace(r *Race) {
 	p.race = r
 }
 

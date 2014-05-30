@@ -1,4 +1,4 @@
-package region
+package sworld
 
 const (
 	Farm     = 0

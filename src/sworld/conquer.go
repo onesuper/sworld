@@ -1,12 +1,8 @@
-package action
+package sworld
 
-import (
-	"atlas"
-	"errors"
-	"race"
-)
+import "errors"
 
-func ConquerRegion(race *race.Race, atlas *atlas.Atlas, region_id int) error {
+func ConquerRegion(race *Race, atlas *Atlas, region_id int) error {
 
 	// out of range?
 	if region_id < 0 || region_id >= atlas.GetSize() {

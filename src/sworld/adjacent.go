@@ -1,17 +1,12 @@
-package region
+package sworld
 
 import (
 	"fmt"
 )
 
-type Node struct {
-	region_id int
-	next      *Node
-}
-
 type Neighbors struct {
-	head *Node
-	tail *Node
+	head *RegionNode
+	tail *RegionNode
 }
 
 func CreateNeighbors() *Neighbors {
@@ -38,7 +33,7 @@ func (t *Neighbors) Add(id int) {
 		return
 	}
 
-	new_node := new(Node)
+	new_node := new(RegionNode)
 	new_node.region_id = id
 	new_node.next = nil
 

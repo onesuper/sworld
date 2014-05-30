@@ -1,21 +1,18 @@
 package main
 
 import (
-	"action"
-	"atlas"
 	"fmt"
-	"player"
-	"race"
 	"strconv"
+	. "sworld"
 )
 
 func main() {
 
-	tiny_atlas := atlas.CreateTinyAtlas()
+	tiny_atlas := CreateTinyAtlas()
 
-	var players [2]*player.Player
-	players[0] = player.CreatePlayer(0, "PLAYER 1")
-	players[1] = player.CreatePlayer(1, "PLAYER 2")
+	var players [2]*Player
+	players[0] = CreatePlayer(0, "PLAYER 1")
+	players[1] = CreatePlayer(1, "PLAYER 2")
 
 	for round := 1; round <= 3; round++ {
 
@@ -45,9 +42,9 @@ func main() {
 					if err == nil {
 						switch race_id {
 						case 1:
-							player.SetRace(race.CreateHumans(player.GetId()))
+							player.SetRace(CreateHumans(player.GetId()))
 						case 2:
-							player.SetRace(race.CreateOrcs(player.GetId()))
+							player.SetRace(CreateOrcs(player.GetId()))
 						default:
 							fmt.Println("Wrong race code!")
 						}
@@ -82,7 +79,7 @@ func main() {
 					region_id, err := strconv.Atoi(region_code)
 
 					if err == nil {
-						err = action.ConquerRegion(player.GetRace(), tiny_atlas, region_id)
+						err = ConquerRegion(player.GetRace(), tiny_atlas, region_id)
 						if err != nil {
 							fmt.Println(err)
 						} else {

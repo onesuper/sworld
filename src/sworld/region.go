@@ -1,18 +1,13 @@
-package region
-
-import (
-	"race"
-	"token"
-)
+package sworld
 
 type Region struct {
 	id        int
 	terrain   int
 	adjacent  *Neighbors
 	belonging int
-	lord      *race.Race
+	lord      *Race
 	troops    int
-	tokens    *token.Token
+	tokens    *Token
 }
 
 func CreateRegion(ter int) *Region {
@@ -41,11 +36,11 @@ func (r *Region) SetBelonging(player_id int) {
 	r.belonging = player_id
 }
 
-func (r *Region) SetLord(race *race.Race) {
+func (r *Region) SetLord(race *Race) {
 	r.lord = race
 }
 
-func (r *Region) GetLord() *race.Race {
+func (r *Region) GetLord() *Race {
 	return r.lord
 }
 
@@ -57,7 +52,7 @@ func (r *Region) GetLordSymbol() string {
 	}
 }
 
-func (r *Region) AddToken(t *token.Token) {
+func (r *Region) AddToken(t *Token) {
 	r.tokens = t
 }
 

@@ -1,16 +1,11 @@
-package territory
+package sworld
 
 import (
 	"fmt"
 )
 
 type Territory struct {
-	head *Node
-}
-
-type Node struct {
-	region_id int
-	next      *Node
+	head *RegionNode
 }
 
 func CreateTerritory() *Territory {
@@ -24,7 +19,7 @@ func (t *Territory) Add(id int) {
 		return
 	}
 
-	new_node := new(Node)
+	new_node := new(RegionNode)
 	new_node.region_id = id
 	new_node.next = nil
 
@@ -42,12 +37,13 @@ func (t *Territory) Remove(id int) bool {
 	}
 
 	cur := t.head
-	var prev *Node = nil
+	var prev *RegionNode = nil
+
 	for cur.next != nil {
 		if cur.region_id == id {
 			if prev != nil {
-				prev.next = cur.next // delete cur
-			} else { // if cur is the head, need to modify t.head
+				prev.next = cur.next
+			} else {
 				t.head = cur.next
 			}
 			return true

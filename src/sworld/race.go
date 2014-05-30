@@ -1,20 +1,16 @@
-package race
-
-import (
-	"territory"
-)
+package sworld
 
 type Race struct {
 	name       string
 	symbol     string
 	deployable int
-	territory  *territory.Territory
+	territory  *Territory
 	player_id  int
 }
 
 func CreateRace() *Race {
 	r := new(Race)
-	r.territory = territory.CreateTerritory()
+	r.territory = CreateTerritory()
 	return r
 }
 
@@ -49,4 +45,23 @@ func (r *Race) GetDeployable() int {
 
 func (r *Race) SetDeployable(n int) {
 	r.deployable = n
+}
+
+func CreateHumans(player_id int) *Race {
+	r := CreateRace()
+	r.name = "HUMANS"
+	r.symbol = "HM"
+	r.deployable = 30
+	r.player_id = player_id
+	return r
+}
+
+func CreateOrcs(player_id int) *Race {
+
+	r := CreateRace()
+	r.name = "ORCS"
+	r.symbol = "OR"
+	r.deployable = 30
+	r.player_id = player_id
+	return r
 }

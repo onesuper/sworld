@@ -1,19 +1,16 @@
-package atlas
+package sworld
 
 import (
 	"fmt"
-	"race"
-	"region"
-	"token"
 )
 
 type Atlas struct {
-	regions []*region.Region
+	regions []*Region
 }
 
 func CreateAtlas(num int) *Atlas {
 	a := new(Atlas)
-	a.regions = make([]*region.Region, num)
+	a.regions = make([]*Region, num)
 	return a
 }
 
@@ -96,11 +93,11 @@ func (a *Atlas) SetRegionBelonging(region_id int, player_id int) {
 	a.regions[region_id].SetBelonging(player_id)
 }
 
-func (a *Atlas) SetRegionLord(region_id int, race *race.Race) {
+func (a *Atlas) SetRegionLord(region_id int, race *Race) {
 	a.regions[region_id].SetLord(race)
 }
 
-func (a *Atlas) GetRegionLord(region_id int) *race.Race {
+func (a *Atlas) GetRegionLord(region_id int) *Race {
 	return a.regions[region_id].GetLord()
 }
 
@@ -109,78 +106,78 @@ func CreateTinyAtlas() *Atlas {
 	// create an atlas with four regions
 	a := CreateAtlas(12)
 
-	a.regions[0] = region.CreateRegion(region.Farm)
+	a.regions[0] = CreateRegion(Farm)
 
 	a.regions[0].AdjacentTo(1)
 	a.regions[0].AdjacentTo(3)
 	a.regions[0].AdjacentTo(4)
 
-	a.regions[1] = region.CreateRegion(region.Plain)
+	a.regions[1] = CreateRegion(Plain)
 	a.regions[1].AdjacentTo(0)
 	a.regions[1].AdjacentTo(2)
 	a.regions[1].AdjacentTo(4)
 	a.regions[1].AdjacentTo(5)
 	a.regions[1].AdjacentTo(6)
 
-	a.regions[2] = region.CreateRegion(region.Forest)
+	a.regions[2] = CreateRegion(Forest)
 	a.regions[2].AdjacentTo(1)
 	a.regions[2].AdjacentTo(6)
 	a.regions[2].AdjacentTo(7)
 
-	a.regions[3] = region.CreateRegion(region.Forest)
+	a.regions[3] = CreateRegion(Forest)
 	a.regions[3].AdjacentTo(0)
 	a.regions[3].AdjacentTo(4)
 	a.regions[3].AdjacentTo(8)
 
-	a.regions[4] = region.CreateRegion(region.Mountain)
+	a.regions[4] = CreateRegion(Mountain)
 	a.regions[4].AdjacentTo(0)
 	a.regions[4].AdjacentTo(1)
 	a.regions[4].AdjacentTo(3)
 	a.regions[4].AdjacentTo(5)
 	a.regions[4].AdjacentTo(8)
 	a.regions[4].AdjacentTo(9)
-	a.regions[4].AddToken(token.CreateToken("MOUNTAIN"))
+	a.regions[4].AddToken(CreateToken("MOUNTAIN"))
 
-	a.regions[5] = region.CreateRegion(region.Sea)
+	a.regions[5] = CreateRegion(Sea)
 	a.regions[5].AdjacentTo(1)
 	a.regions[5].AdjacentTo(4)
 	a.regions[5].AdjacentTo(6)
 	a.regions[5].AdjacentTo(9)
 	a.regions[5].AdjacentTo(10)
 
-	a.regions[6] = region.CreateRegion(region.Mountain)
+	a.regions[6] = CreateRegion(Mountain)
 	a.regions[6].AdjacentTo(1)
 	a.regions[6].AdjacentTo(2)
 	a.regions[6].AdjacentTo(5)
 	a.regions[6].AdjacentTo(7)
 	a.regions[6].AdjacentTo(10)
-	a.regions[6].AddToken(token.CreateToken("MOUNTAIN"))
+	a.regions[6].AddToken(CreateToken("MOUNTAIN"))
 
-	a.regions[7] = region.CreateRegion(region.Swamp)
+	a.regions[7] = CreateRegion(Swamp)
 	a.regions[7].AdjacentTo(2)
 	a.regions[7].AdjacentTo(6)
 	a.regions[7].AdjacentTo(10)
 	a.regions[7].AdjacentTo(11)
 
-	a.regions[8] = region.CreateRegion(region.Swamp)
+	a.regions[8] = CreateRegion(Swamp)
 	a.regions[8].AdjacentTo(3)
 	a.regions[8].AdjacentTo(4)
 	a.regions[8].AdjacentTo(9)
 
-	a.regions[9] = region.CreateRegion(region.Plain)
+	a.regions[9] = CreateRegion(Plain)
 	a.regions[9].AdjacentTo(4)
 	a.regions[9].AdjacentTo(5)
 	a.regions[9].AdjacentTo(8)
 	a.regions[9].AdjacentTo(10)
 
-	a.regions[10] = region.CreateRegion(region.Farm)
+	a.regions[10] = CreateRegion(Farm)
 	a.regions[10].AdjacentTo(5)
 	a.regions[10].AdjacentTo(6)
 	a.regions[10].AdjacentTo(7)
 	a.regions[10].AdjacentTo(9)
 	a.regions[10].AdjacentTo(11)
 
-	a.regions[11] = region.CreateRegion(region.Sea)
+	a.regions[11] = CreateRegion(Sea)
 	a.regions[11].AdjacentTo(7)
 	a.regions[11].AdjacentTo(10)
 
