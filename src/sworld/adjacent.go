@@ -1,9 +1,5 @@
 package sworld
 
-import (
-	"fmt"
-)
-
 type Neighbors struct {
 	head *RegionNode
 	tail *RegionNode
@@ -14,18 +10,6 @@ func CreateNeighbors() *Neighbors {
 	n.head = nil
 	n.tail = nil
 	return n
-}
-
-func (n *Neighbors) Show() {
-	if n == nil {
-		return
-	}
-
-	p := n.head
-	for p != nil {
-		fmt.Printf("->%d ", p.region_id)
-		p = p.next
-	}
 }
 
 func (t *Neighbors) Add(id int) {
@@ -45,4 +29,14 @@ func (t *Neighbors) Add(id int) {
 		t.tail = new_node
 
 	}
+}
+
+func (t *Neighbors) List() []int {
+	l := make([]int, 0)
+	cur := t.head
+	for cur != nil {
+		l = append(l, cur.region_id)
+		cur = cur.next
+	}
+	return l
 }

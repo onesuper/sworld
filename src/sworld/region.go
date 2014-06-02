@@ -22,6 +22,10 @@ func CreateRegion(ter int, bord bool) *Region {
 	return r
 }
 
+func (r *Region) Adjacent() []int {
+	return r.adjacent.List()
+}
+
 func (r *Region) Troops() int {
 	return r.troops
 }
