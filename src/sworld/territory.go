@@ -20,7 +20,7 @@ func (t *Territory) Add(id int) {
 	new_node.next = nil
 
 	if t.head != nil {
-		t.head.next = new_node
+		new_node.next = t.head
 		t.head = new_node
 	} else {
 		t.head = new_node
@@ -52,13 +52,13 @@ func (t *Territory) Remove(id int) bool {
 	return false
 }
 
-func (t *Territory) HasRegion(id int) bool {
-	p := t.head
-	for p != nil {
-		if p.region_id == id {
+func (t *Territory) Has(id int) bool {
+	cur := t.head
+	for cur != nil {
+		if cur.region_id == id {
 			return true
 		}
-		p = p.next
+		cur = cur.next
 	}
 	return false
 }

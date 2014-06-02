@@ -12,7 +12,7 @@ func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 	}
 
 	// own territory checking
-	if race.HasTerritory(region_id) {
+	if race.Territory().Has(region_id) {
 		AlertError("Can not conquer your own territory")
 		return false
 	}
@@ -26,17 +26,17 @@ func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 	}
 
 	// enter from border checking
-	if !race.HasAnyTerritory() && !race.Airborne() && !target_region.Border() {
+	if race.Territory().IsEmpty() && !race.Airborne() && !target_region.Border() {
 		AlertError("Must enter from a border region")
 		return false
 	}
 
 	// if a race has conquered any regions before, it has to conquer the
 	// regions surrounding to its territory
-	if race.HasAnyTerritory() {
+	if !race.Territory().IsEmpty() {
 		within := false
 		for _, id := range target_region.Adjacent() {
-			if race.HasTerritory(id) {
+			if race.Territory().Has(id) {
 				within = true // find at least one way to come
 				break
 			}
@@ -53,19 +53,16 @@ func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 		AlertError("The defense is too high to conquer")
 		return false
 	}
-
-	race.SetDeployable(race.Deployable() - bottom_def)
-	race.AddTerritory(region_id)
-	//tlas.SetRegionBelonging(region_id, race.PlayerId())
-
-	// loser surrenders its territory
-	loser := target_region.Lord()
+	// loser surrenders its territory fist
+	loser := target_region.Troop().Lord()
 	if loser != nil {
-		loser.SetDeployable(loser.Deployable() + bottom_def - 3)
-		loser.SurrenderTerritory(region_id)
+		loser.SetDeployable(loser.Deployable() + target_region.Defense())
+		loser.Territory().Remove(region_id)
 	}
 
-	target_region.SetLord(race)
+	race.Territory().Add(region_id)
+	race.SetDeployable(race.Deployable() - bottom_def)
+	target_region.SetTroop(CreateTroop(race, bottom_def))
 
 	return true
 

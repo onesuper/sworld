@@ -14,7 +14,7 @@ func main() {
 	players[0] = CreatePlayer(0, "PLAYER 1")
 	players[1] = CreatePlayer(1, "PLAYER 2")
 
-	for round := 1; round <= 3; round++ {
+	for round := 1; round <= 10; round++ {
 
 		fmt.Printf("====================== Round %d ======================\n", round)
 
@@ -46,10 +46,10 @@ func main() {
 						case 2:
 							player.SetRace(CreateOrcs(player.Id()))
 						default:
-							AlertError("Wrong race code!")
+							AlertError("Wrong race code")
 						}
 					} else {
-						AlertError("Wrong race code!")
+						AlertError("Wrong race code")
 					}
 
 				}
@@ -83,7 +83,7 @@ func main() {
 							AlertSuccess(fmt.Sprintf("Succesfully conquered region %d", region_id))
 						}
 					} else {
-						AlertError("Wrong region code!")
+						AlertError("Wrong region code")
 					}
 				}
 

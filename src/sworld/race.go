@@ -13,7 +13,7 @@ type Race struct {
 func CreateRace() *Race {
 	r := new(Race)
 	r.territory = CreateTerritory()
-	// following special power is switched-off
+	// following special power is switched-off by default
 	r.airborne = false
 	r.seafaring = false
 	return r
@@ -43,27 +43,12 @@ func (r *Race) Airborne() bool {
 	return r.airborne
 }
 
+func (r *Race) Territory() *Territory {
+	return r.territory
+}
+
 // setter
 
 func (r *Race) SetDeployable(n int) {
 	r.deployable = n
-}
-
-// territory relevant functions
-
-func (r *Race) AddTerritory(region_id int) {
-	r.territory.Add(region_id)
-
-}
-
-func (r *Race) HasTerritory(region_id int) bool {
-	return r.territory.HasRegion(region_id)
-}
-
-func (r *Race) SurrenderTerritory(region_id int) bool {
-	return r.territory.Remove(region_id)
-}
-
-func (r *Race) HasAnyTerritory() bool {
-	return !r.territory.IsEmpty()
 }

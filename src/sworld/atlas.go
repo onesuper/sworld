@@ -10,17 +10,6 @@ func CreateAtlas(num int) *Atlas {
 	return a
 }
 
-/*
-func (a *Atlas) CanReach(from int, to int) bool {
-	for i := 0; i < len(a.regions[from].Adjacent); i++ {
-		if a.regions[from].Adjacent[i] == to {
-			return true
-		}
-	}
-	return false
-}
-*/
-
 func (a *Atlas) Size() int {
 	return len(a.regions)
 }
