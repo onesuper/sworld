@@ -1,40 +1,60 @@
 package sworld
 
-import "errors"
+import "fmt"
 
-func ConquerRegion(race *Race, atlas *Atlas, region_id int) error {
+/**
+ * Given a region number, return false if this action fails
+ */
+func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 
-	// out of range?
-	if region_id < 0 || region_id >= atlas.GetSize() {
-		return errors.New("The region ID is out of range")
+	// out of range checking
+	if region_id < 0 || region_id >= atlas.Size() {
+		fmt.Println("The region ID is out of range")
+		return false
 	}
 
-	// out of arrival?
-
-	// own territory?
+	// own territory checking
 	if race.HasTerritory(region_id) {
-		return errors.New("Can not conquer your own territory")
-
+		fmt.Println("Can not conquer your own territory")
+		return false
 	}
 
-	bottom_def := atlas.GetRegionDefense(region_id) + 2
+	target_region := atlas.Region(region_id)
 
-	if race.GetDeployable() > bottom_def {
-		race.SetDeployable(race.GetDeployable() - bottom_def)
-		race.AddTerritory(region_id)
-		atlas.SetRegionBelonging(region_id, race.GetPlayerId())
-
-		// loser surrenders its territory
-		loser := atlas.GetRegionLord(region_id)
-
-		if loser != nil {
-			loser.SetDeployable(loser.GetDeployable() + bottom_def - 3)
-			loser.SurrenderTerritory(region_id)
-		}
-		atlas.SetRegionLord(region_id, race)
-
-		return nil
-	} else {
-		return errors.New("The defense is too high to conquer")
+	// sea region checking
+	if target_region.Terrain() == Sea && !race.Seafaring() {
+		fmt.Println("Can not conquer sea region")
+		return false
 	}
+
+	// enter from border checking
+	if !race.HasAnyTerritory() && !race.Airborne() && !target_region.Border() {
+		fmt.Println("Must enter from a border region")
+		return false
+	}
+
+	// out of arrival check
+
+	bottom_def := target_region.Defense() + 2
+
+	if race.Deployable() < bottom_def {
+		fmt.Println("The defense is too high to conquer")
+		return false
+	}
+
+	race.SetDeployable(race.Deployable() - bottom_def)
+	race.AddTerritory(region_id)
+	//tlas.SetRegionBelonging(region_id, race.PlayerId())
+
+	// loser surrenders its territory
+	loser := target_region.Lord()
+	if loser != nil {
+		loser.SetDeployable(loser.Deployable() + bottom_def - 3)
+		loser.SurrenderTerritory(region_id)
+	}
+
+	target_region.SetLord(race)
+
+	return true
+
 }

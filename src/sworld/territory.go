@@ -1,9 +1,5 @@
 package sworld
 
-import (
-	"fmt"
-)
-
 type Territory struct {
 	head *RegionNode
 }
@@ -67,10 +63,10 @@ func (t *Territory) HasRegion(id int) bool {
 	return false
 }
 
-func (t *Territory) Show() {
-	p := t.head
-	for p != nil {
-		fmt.Printf("->%d ", p.region_id)
-		p = p.next
+func (t *Territory) IsEmpty() bool {
+	if t.head == nil {
+		return true
+	} else {
+		return false
 	}
 }

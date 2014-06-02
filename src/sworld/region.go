@@ -8,28 +8,50 @@ type Region struct {
 	lord      *Race
 	troops    int
 	tokens    *Token
+	border    bool
 }
 
-func CreateRegion(ter int) *Region {
+func CreateRegion(ter int, bord bool) *Region {
 	r := new(Region)
 	r.terrain = ter
 	r.adjacent = CreateNeighbors()
 	r.belonging = -1
 	r.lord = nil
 	r.troops = 0
+	r.border = bord
 	return r
 }
 
-func (r *Region) GetTroops() int {
+func (r *Region) Troops() int {
 	return r.troops
 }
 
-func (r *Region) GetDefense() int {
+func (r *Region) Defense() int {
 	return 3
 }
 
-func (r *Region) GetTerrain() string {
+func (r *Region) Terrain() int {
+	return r.terrain
+}
+
+func (r *Region) TerrainStr() string {
 	return NumToStr(r.terrain)
+}
+
+func (r *Region) Lord() *Race {
+	return r.lord
+}
+
+func (r *Region) Border() bool {
+	return r.border
+}
+
+func (r *Region) LordSymbol() string {
+	if r.lord == nil {
+		return "  "
+	} else {
+		return r.lord.Symbol()
+	}
 }
 
 func (r *Region) SetBelonging(player_id int) {
@@ -38,18 +60,6 @@ func (r *Region) SetBelonging(player_id int) {
 
 func (r *Region) SetLord(race *Race) {
 	r.lord = race
-}
-
-func (r *Region) GetLord() *Race {
-	return r.lord
-}
-
-func (r *Region) GetLordSymbol() string {
-	if r.lord == nil {
-		return "  "
-	} else {
-		return r.lord.GetSymbol()
-	}
 }
 
 func (r *Region) AddToken(t *Token) {

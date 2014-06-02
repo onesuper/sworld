@@ -20,14 +20,14 @@ func main() {
 
 		for _, player := range players {
 
-			fmt.Printf("%s's turn\n", player.GetName())
+			fmt.Printf("%s's turn\n", player.Name())
 
 			// if race is not chosen, chose it!
-			for player.GetRace() == nil {
+			for player.Race() == nil {
 
 				fmt.Println("Please choose a race. Insert the combo ID")
-				fmt.Println("1: HUMAN")
-				fmt.Println("2: ORC")
+				fmt.Println("1: Humans")
+				fmt.Println("2: Orcs")
 				fmt.Println("To see the map, insert 'm'")
 
 				var race_code string
@@ -42,9 +42,9 @@ func main() {
 					if err == nil {
 						switch race_id {
 						case 1:
-							player.SetRace(CreateHumans(player.GetId()))
+							player.SetRace(CreateHumans(player.Id()))
 						case 2:
-							player.SetRace(CreateOrcs(player.GetId()))
+							player.SetRace(CreateOrcs(player.Id()))
 						default:
 							fmt.Println("Wrong race code!")
 						}
@@ -60,7 +60,7 @@ func main() {
 		ConquerStage:
 			for {
 
-				fmt.Printf("%s %d\n", player.GetRace().GetName(), player.GetRace().GetDeployable())
+				fmt.Printf("%s %d\n", player.Race().Name(), player.Race().Deployable())
 
 				fmt.Println("Please choose a region to conquer. Insert the region ID")
 				fmt.Println("Or insert 'r' to redeploy troops")
@@ -79,12 +79,8 @@ func main() {
 					region_id, err := strconv.Atoi(region_code)
 
 					if err == nil {
-						err = ConquerRegion(player.GetRace(), tiny_atlas, region_id)
-						if err != nil {
-							fmt.Println(err)
-						} else {
+						if ConquerRegion(player.Race(), tiny_atlas, region_id) {
 							fmt.Printf("Conquering %d\n", region_id)
-
 						}
 					} else {
 						fmt.Println("Wrong region code!")
