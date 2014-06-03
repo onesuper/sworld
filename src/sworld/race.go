@@ -5,9 +5,12 @@ type Race struct {
 	symbol     string
 	deployable int
 	territory  *Territory
-	airborne   bool
-	seafaring  bool
 	player_id  int
+
+	// special power
+	airborne  bool
+	seafaring bool
+	immortal  bool
 }
 
 func CreateRace() *Race {
@@ -16,6 +19,7 @@ func CreateRace() *Race {
 	// following special power is switched-off by default
 	r.airborne = false
 	r.seafaring = false
+	r.immortal = false
 	return r
 }
 
@@ -35,14 +39,6 @@ func (r *Race) Deployable() int {
 	return r.deployable
 }
 
-func (r *Race) Seafaring() bool {
-	return r.seafaring
-}
-
-func (r *Race) Airborne() bool {
-	return r.airborne
-}
-
 func (r *Race) Territory() *Territory {
 	return r.territory
 }
@@ -51,4 +47,16 @@ func (r *Race) Territory() *Territory {
 
 func (r *Race) SetDeployable(n int) {
 	r.deployable = n
+}
+
+func (r *Race) Seafaring() bool {
+	return r.seafaring
+}
+
+func (r *Race) Airborne() bool {
+	return r.airborne
+}
+
+func (r *Race) Immortal() bool {
+	return r.immortal
 }

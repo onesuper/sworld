@@ -55,9 +55,16 @@ func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 	}
 	// loser surrenders its territory fist
 	loser := target_region.Troop().Lord()
+
 	if loser != nil {
-		loser.SetDeployable(loser.Deployable() + target_region.Defense())
 		loser.Territory().Remove(region_id)
+		remains := target_region.Troop().Population()
+		// loser's death
+		if !loser.Immortal() {
+			remains -= 1
+		}
+		// all the remains back to hand
+		loser.SetDeployable(loser.Deployable() + remains)
 	}
 
 	race.Territory().Add(region_id)

@@ -28,3 +28,13 @@ func CreateHalflings(player_id int) *Race {
 	r.airborne = true
 	return r
 }
+
+func CreatesElves(player_id int) *Race {
+	r := CreateRace()
+	r.name = "Elves"
+	r.symbol = "EL"
+	r.deployable = 11
+	r.player_id = player_id
+	r.immortal = true
+	return r
+}

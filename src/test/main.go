@@ -44,8 +44,10 @@ func main() {
 						switch race_id {
 						case 1:
 							player.SetRace(CreateHumans(player.Id()))
+							continue
 						case 2:
 							player.SetRace(CreateOrcs(player.Id()))
+							continue
 						default:
 							AlertError("Wrong race code")
 						}
@@ -80,6 +82,7 @@ func main() {
 					if err == nil {
 						if ConquerRegion(player.Race(), tiny_atlas, region_id) {
 							AlertSuccess(fmt.Sprintf("Succesfully conquered region %d", region_id))
+							continue
 						}
 					} else {
 						AlertError("Wrong region code")
@@ -94,7 +97,8 @@ func main() {
 
 				AlertInfo(fmt.Sprintf("%s %d", player.Race().Name(), player.Race().Deployable()))
 
-				fmt.Println("Please redeploy your troop. Insert a Region ID pair (e.g. 3 5)")
+				fmt.Println("For redeploying your troops between regions, insert a Region ID pair (e.g. 3 5)")
+				fmt.Println("If you have idle soldiers, insert a single region ID to deploy it")
 				fmt.Println("Or insert 'd' to finish your job")
 
 				deploy_code := ReadCommand()
@@ -106,19 +110,23 @@ func main() {
 				default:
 
 					words := strings.Fields(deploy_code)
-					if len(words) < 2 {
-						AlertError("Too less region")
-						continue
-					}
+					if len(words) == 2 {
+						region_id_A, err1 := strconv.Atoi(words[0])
+						region_id_B, err2 := strconv.Atoi(words[1])
+						if err1 == nil && err2 == nil {
+							if DeployRegions(player.Race(), tiny_atlas, region_id_A, region_id_B) {
+								AlertSuccess(fmt.Sprintf("Succesfully deployed your troops"))
+								continue
+							}
+						}
 
-					fmt.Printf("%d %d\n\n", words[0], words[1])
-					region_id_A, err1 := strconv.Atoi(words[0])
-					region_id_B, err2 := strconv.Atoi(words[1])
-
-					if err1 == nil && err2 == nil {
-
-						if RedeployRegion(player.Race(), tiny_atlas, region_id_A, region_id_B) {
-							AlertSuccess(fmt.Sprintf("Succesfully deployed your troops"))
+					} else if len(words) == 1 {
+						region_id, err := strconv.Atoi(words[0])
+						if err == nil {
+							if DeployIdle(player.Race(), tiny_atlas, region_id) {
+								AlertSuccess(fmt.Sprintf("Successfully deplopy an idle soldier"))
+								continue
+							}
 						}
 
 					} else {
