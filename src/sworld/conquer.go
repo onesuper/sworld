@@ -1,34 +1,33 @@
 package sworld
 
+import "errors"
+
 /**
  * Given a region number, return false if this action fails
  */
-func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
+func ConquerRegion(race *Race, atlas *Atlas, region_id int) error {
 
 	// out of range checking
 	if region_id < 0 || region_id >= atlas.Size() {
-		AlertError("The region ID is out of range")
-		return false
+		return errors.New("The region ID is out of range")
 	}
 
 	// own territory checking
 	if race.Territory().Has(region_id) {
-		AlertError("Can not conquer your own territory")
-		return false
+		return errors.New("Can not conquer your own territory")
+
 	}
 
 	target_region := atlas.Region(region_id)
 
 	// sea region checking
 	if target_region.IsSea() && !race.IsSeafaring() {
-		AlertError("Can not conquer sea region")
-		return false
+		return errors.New("Can not conquer sea region")
 	}
 
 	// enter from border checking
 	if race.Territory().IsEmpty() && !race.IsAirborne() && !target_region.IsBorder() {
-		AlertError("Must enter from a border region")
-		return false
+		return errors.New("Must enter from a border region")
 	}
 
 	// if a race has conquered any regions before, it has to conquer the
@@ -42,17 +41,17 @@ func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 			}
 		}
 		if within == false {
-			AlertError("Must conquer a region adjacent to your territory")
-			return false
+			return errors.New("Must conquer a region adjacent to your territory")
+
 		}
 	}
 
 	bottom_def := target_region.Defense() + 2
 
 	if race.Deployable() < bottom_def {
-		AlertError("The defense is too high to conquer")
-		return false
+		return errors.New("The defense is too high to conquer")
 	}
+
 	// loser surrenders its territory fist
 	loser := target_region.Troop().Lord()
 
@@ -71,6 +70,6 @@ func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 	race.SetDeployable(race.Deployable() - bottom_def)
 	target_region.SetTroop(CreateTroop(race, bottom_def))
 
-	return true
+	return nil
 
 }

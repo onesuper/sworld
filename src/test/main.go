@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	. "ct"
 	"fmt"
 	"os"
 	"strconv"
@@ -80,9 +81,12 @@ func main() {
 					region_id, err := strconv.Atoi(region_code)
 
 					if err == nil {
-						if ConquerRegion(player.Race(), tiny_atlas, region_id) {
+						err = ConquerRegion(player.Race(), tiny_atlas, region_id)
+						if err == nil {
 							AlertSuccess(fmt.Sprintf("Succesfully conquered region %d", region_id))
 							continue
+						} else {
+							AlertError(err.Error())
 						}
 					} else {
 						AlertError("Wrong region code")
@@ -112,18 +116,24 @@ func main() {
 						region_id_A, err1 := strconv.Atoi(words[0])
 						region_id_B, err2 := strconv.Atoi(words[1])
 						if err1 == nil && err2 == nil {
-							if DeployRegions(player.Race(), tiny_atlas, region_id_A, region_id_B) {
-								AlertSuccess(fmt.Sprintf("Succesfully deployed your troops"))
+							err := DeployRegions(player.Race(), tiny_atlas, region_id_A, region_id_B)
+							if err == nil {
+								AlertSuccess("Succesfully deployed your troops")
 								continue
+							} else {
+								AlertError(err.Error())
 							}
 						}
 
 					} else if len(words) == 1 {
 						region_id, err := strconv.Atoi(words[0])
 						if err == nil {
-							if DeployIdle(player.Race(), tiny_atlas, region_id) {
-								AlertSuccess(fmt.Sprintf("Successfully deplopy an idle soldier"))
+							err = DeployIdle(player.Race(), tiny_atlas, region_id)
+							if err == nil {
+								AlertSuccess("Successfully deploy an idle soldier")
 								continue
+							} else {
+								AlertError(err.Error())
 							}
 						}
 
@@ -155,4 +165,22 @@ func ReadCommand() string {
 
 func PlayerInfo(player *Player) {
 	AlertInfo(fmt.Sprintf("%s\t%d\t$%d", player.Race().Name(), player.Race().Deployable(), player.Coins()))
+}
+
+func AlertSuccess(s string) {
+	ChangeColor(Green, true, None, false)
+	fmt.Println(s)
+	ResetColor()
+}
+
+func AlertError(s string) {
+	ChangeColor(Red, true, None, false)
+	fmt.Println(s)
+	ResetColor()
+}
+
+func AlertInfo(s string) {
+	ChangeColor(Blue, true, None, false)
+	fmt.Println(s)
+	ResetColor()
 }
