@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strconv"
+	"strings"
 	. "sworld"
 )
 
@@ -30,9 +33,7 @@ func main() {
 				fmt.Println("2: Orcs")
 				fmt.Println("To see the map, insert 'm'")
 
-				var race_code string
-				fmt.Scanf("%s", &race_code)
-
+				race_code := ReadCommand()
 				switch race_code {
 				case "m":
 					tiny_atlas.Show()
@@ -60,21 +61,19 @@ func main() {
 		ConquerStage:
 			for {
 
+				tiny_atlas.Show()
+
 				AlertInfo(fmt.Sprintf("%s %d", player.Race().Name(), player.Race().Deployable()))
 
 				fmt.Println("Please choose a region to conquer. Insert the region ID")
 				fmt.Println("Or insert 'r' to redeploy troops")
-				fmt.Println("To see the map, insert 'm'")
 
-				var region_code string
-				fmt.Scanf("%s", &region_code)
+				region_code := ReadCommand()
 
 				switch region_code {
 				case "r":
 					break ConquerStage // move to redeployment stage
-				case "m":
-					tiny_atlas.Show()
-
+				// add other options
 				default:
 					region_id, err := strconv.Atoi(region_code)
 
@@ -88,10 +87,62 @@ func main() {
 				}
 
 			}
-			fmt.Println("redeploy")
+
+		RedeployStage:
+			for {
+				tiny_atlas.Show()
+
+				AlertInfo(fmt.Sprintf("%s %d", player.Race().Name(), player.Race().Deployable()))
+
+				fmt.Println("Please redeploy your troop. Insert a Region ID pair (e.g. 3 5)")
+				fmt.Println("Or insert 'd' to finish your job")
+
+				deploy_code := ReadCommand()
+
+				switch deploy_code {
+				case "d":
+					break RedeployStage // move to redeployment stage
+				// add other options
+				default:
+
+					words := strings.Fields(deploy_code)
+					if len(words) < 2 {
+						AlertError("Too less region")
+						continue
+					}
+
+					fmt.Printf("%d %d\n\n", words[0], words[1])
+					region_id_A, err1 := strconv.Atoi(words[0])
+					region_id_B, err2 := strconv.Atoi(words[1])
+
+					if err1 == nil && err2 == nil {
+
+						if RedeployRegion(player.Race(), tiny_atlas, region_id_A, region_id_B) {
+							AlertSuccess(fmt.Sprintf("Succesfully deployed your troops"))
+						}
+
+					} else {
+						AlertError("Wrong deploy code")
+					}
+				}
+
+			}
+
 			fmt.Println("make money")
 
 		}
 	}
 
+}
+
+func ClearScreen() {
+	fmt.Print("\033[2J")
+	fmt.Print("\033[H")
+}
+
+func ReadCommand() string {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Enter command: ")
+	text, _ := reader.ReadString('\n')
+	return strings.TrimSpace(text)
 }

@@ -16,6 +16,10 @@ func (t *Troop) Population() int {
 	return t.population
 }
 
+func (t *Troop) SetPopulation(pop int) {
+	t.population = pop
+}
+
 func CreateTroop(race *Race, pop int) *Troop {
 	t := new(Troop)
 	t.lord = race

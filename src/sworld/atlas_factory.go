@@ -59,6 +59,7 @@ func (a *Atlas) Show() {
 		TroopInfoStr(a.regions[9].Troop()),
 		TroopInfoStr(a.regions[10].Troop()),
 		TroopInfoStr(a.regions[11].Troop()))
+
 }
 
 func TroopInfoStr(troop *Troop) string {
