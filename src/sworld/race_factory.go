@@ -5,6 +5,7 @@ func CreateHumans(player_id int) *Race {
 	r.name = "Humans"
 	r.symbol = "HM"
 	r.deployable = 10
+	r.farmer = true
 	r.player_id = player_id
 	return r
 }

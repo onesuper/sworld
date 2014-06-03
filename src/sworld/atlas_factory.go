@@ -81,7 +81,7 @@ func CreateTinyAtlas() *Atlas {
 	a.regions[0].AdjacentTo(3)
 	a.regions[0].AdjacentTo(4)
 
-	a.regions[1] = CreateRegion(Plain, true)
+	a.regions[1] = CreateRegion(Hill, true)
 	a.regions[1].AdjacentTo(0)
 	a.regions[1].AdjacentTo(2)
 	a.regions[1].AdjacentTo(4)
@@ -133,7 +133,7 @@ func CreateTinyAtlas() *Atlas {
 	a.regions[8].AdjacentTo(4)
 	a.regions[8].AdjacentTo(9)
 
-	a.regions[9] = CreateRegion(Plain, true)
+	a.regions[9] = CreateRegion(Hill, true)
 	a.regions[9].AdjacentTo(4)
 	a.regions[9].AdjacentTo(5)
 	a.regions[9].AdjacentTo(8)

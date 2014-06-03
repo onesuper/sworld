@@ -3,7 +3,7 @@ package sworld
 const (
 	Farm     = 0
 	Sea      = 1
-	Plain    = 2
+	Hill     = 2
 	Mountain = 3
 	Forest   = 4
 	Swamp    = 5

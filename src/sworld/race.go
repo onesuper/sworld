@@ -11,15 +11,22 @@ type Race struct {
 	airborne  bool
 	seafaring bool
 	immortal  bool
+	merchant  bool
+	forester  bool
+	farmer    bool
 }
 
 func CreateRace() *Race {
 	r := new(Race)
 	r.territory = CreateTerritory()
+
 	// following special power is switched-off by default
 	r.airborne = false
 	r.seafaring = false
 	r.immortal = false
+	r.merchant = false
+	r.forester = false
+	r.farmer = false
 	return r
 }
 
@@ -49,14 +56,26 @@ func (r *Race) SetDeployable(n int) {
 	r.deployable = n
 }
 
-func (r *Race) Seafaring() bool {
+func (r *Race) IsSeafaring() bool {
 	return r.seafaring
 }
 
-func (r *Race) Airborne() bool {
+func (r *Race) IsAirborne() bool {
 	return r.airborne
 }
 
-func (r *Race) Immortal() bool {
+func (r *Race) IsImmortal() bool {
 	return r.immortal
+}
+
+func (r *Race) IsMechant() bool {
+	return r.merchant
+}
+
+func (r *Race) IsForester() bool {
+	return r.forester
+}
+
+func (r *Race) IsFarmer() bool {
+	return r.farmer
 }

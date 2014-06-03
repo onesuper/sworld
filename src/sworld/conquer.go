@@ -20,13 +20,13 @@ func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 	target_region := atlas.Region(region_id)
 
 	// sea region checking
-	if target_region.Terrain() == Sea && !race.Seafaring() {
+	if target_region.IsSea() && !race.IsSeafaring() {
 		AlertError("Can not conquer sea region")
 		return false
 	}
 
 	// enter from border checking
-	if race.Territory().IsEmpty() && !race.Airborne() && !target_region.Border() {
+	if race.Territory().IsEmpty() && !race.IsAirborne() && !target_region.IsBorder() {
 		AlertError("Must enter from a border region")
 		return false
 	}
@@ -60,7 +60,7 @@ func ConquerRegion(race *Race, atlas *Atlas, region_id int) bool {
 		loser.Territory().Remove(region_id)
 		remains := target_region.Troop().Population()
 		// loser's death
-		if !loser.Immortal() {
+		if !loser.IsImmortal() {
 			remains -= 1
 		}
 		// all the remains back to hand

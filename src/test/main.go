@@ -65,7 +65,7 @@ func main() {
 
 				tiny_atlas.Show()
 
-				AlertInfo(fmt.Sprintf("%s %d", player.Race().Name(), player.Race().Deployable()))
+				PlayerInfo(player)
 
 				fmt.Println("Please choose a region to conquer. Insert the region ID")
 				fmt.Println("Or insert 'r' to redeploy troops")
@@ -94,9 +94,7 @@ func main() {
 		RedeployStage:
 			for {
 				tiny_atlas.Show()
-
-				AlertInfo(fmt.Sprintf("%s %d", player.Race().Name(), player.Race().Deployable()))
-
+				PlayerInfo(player)
 				fmt.Println("For redeploying your troops between regions, insert a Region ID pair (e.g. 3 5)")
 				fmt.Println("If you have idle soldiers, insert a single region ID to deploy it")
 				fmt.Println("Or insert 'd' to finish your job")
@@ -136,8 +134,8 @@ func main() {
 
 			}
 
-			fmt.Println("make money")
-
+			coins := Scoring(player, tiny_atlas)
+			AlertInfo(fmt.Sprintf("Income %d coins", coins))
 		}
 	}
 
@@ -153,4 +151,8 @@ func ReadCommand() string {
 	fmt.Print("Enter command: ")
 	text, _ := reader.ReadString('\n')
 	return strings.TrimSpace(text)
+}
+
+func PlayerInfo(player *Player) {
+	AlertInfo(fmt.Sprintf("%s\t%d\t$%d", player.Race().Name(), player.Race().Deployable(), player.Coins()))
 }

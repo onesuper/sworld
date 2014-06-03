@@ -70,3 +70,13 @@ func (t *Territory) IsEmpty() bool {
 		return false
 	}
 }
+
+func (t *Territory) List() []int {
+	l := make([]int, 0)
+	cur := t.head
+	for cur != nil {
+		l = append(l, cur.region_id)
+		cur = cur.next
+	}
+	return l
+}

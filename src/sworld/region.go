@@ -20,6 +20,30 @@ func CreateRegion(ter int, bord bool) *Region {
 	return r
 }
 
+func (r *Region) IsMountain() bool {
+	return r.terrain == Mountain
+}
+
+func (r *Region) IsFarm() bool {
+	return r.terrain == Farm
+}
+
+func (r *Region) IsSwamp() bool {
+	return r.terrain == Swamp
+}
+
+func (r *Region) IsHill() bool {
+	return r.terrain == Hill
+}
+
+func (r *Region) IsForest() bool {
+	return r.terrain == Forest
+}
+
+func (r *Region) IsSea() bool {
+	return r.terrain == Sea
+}
+
 func (r *Region) Adjacent() []int {
 	return r.adjacent.List()
 }
@@ -47,7 +71,7 @@ func (r *Region) TerrainStr() string {
 	return NumToStr(r.terrain)
 }
 
-func (r *Region) Border() bool {
+func (r *Region) IsBorder() bool {
 	return r.border
 }
 

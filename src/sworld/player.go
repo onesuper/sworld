@@ -34,3 +34,7 @@ func (p *Player) Coins() int {
 func (p *Player) SetRace(r *Race) {
 	p.race = r
 }
+
+func (p *Player) GainCoins(c int) {
+	p.coins += c
+}
